@@ -1,0 +1,146 @@
+'''
+List:
+    [(0,1), (0,2), (0,3),(1,2),(2,1)]
+        
+
+Dictionary:
+    {
+        0:[1,2,3],
+        1:[2],
+        2:[1]
+    }
+
+Matrix:
+    [ [0, 1, 1, 1],
+      [0, 0, 1, 0],
+      [0, 1, 0, 0],
+      [0, 0, 0, 0],
+    ]
+    
+    Coverting these 3 graphs representation from one form to another
+    '''
+    
+    import numpy as np
+    
+def graph_list2matrix(graph, num_nodes):
+    """
+    Arguments:
+        graph   a list representation of the graph g where each entry
+                 in the list is a tuple of (from,to) edges in the graph
+        num_nodes  the number of nodes; each node will be labeled from
+                    0 to num_nodes-1
+
+    Returns:
+        a numpy matrix where entries (i,j) represent edges from
+        node i to node j
+    """
+    
+        
+    m = np.zeros([num_nodes, num_nodes], dtype = int) # Create a empty matrix with zeros
+
+    for i in graph:
+        m[i[0]][i[1]] = 1
+    
+    return m
+    
+def graph_list2dict(graph, num_nodes):
+    """
+    Argumnents:
+        graph     a list representation of the graph g where each entry
+                  in the list is a tuple of (from,to) edges in the graph
+        num_nodes  the number of nodes; each node will be labeled from
+                   0 to num_nodes-1
+
+    Returns:
+        a dictionary where the key to each entry is the from
+        node and the values are the edges to other nodes
+    """
+    k = dict()
+    for i in graph:
+        # here we define the key is the first element of the tuple,
+        key = i[0]
+        # check if key is already present in dict
+        if key not in k:
+            k[key] = []
+        # append value 
+        k[key].append(i[1])
+
+    return k
+    
+def graph_matrix2list(graph, num_nodes):
+    """
+    Arguments:
+        graph   a numpy matrix where entries (i,j) represent edges from
+                node i to node j
+
+        num_nodes  the number of nodes; each node will be labeled from
+                     0 to num_nodes-1
+
+    Returns:
+        a list representation of the graph g where each entry
+        in the list is a tuple of (from,to) edges in the graph
+    """
+    l = list()
+    val = 1
+    # Get indexes and value and check where 1 is present
+    for i, row in enumerate(graph):
+        for j,k in enumerate(row):
+            if k==1:
+                l.append(tuple((i,j)))
+
+    return l
+    
+def graph_matrix2dict(graph, num_nodes):
+    """
+    Arguments:
+        graph   a numpy matrix where entries (i,j) represent edges from
+                node i to node j
+        num_nodes  the number of nodes; each node will be labeled from
+                    0 to num_nodes-1
+
+    Returns:
+        a dictionary where the key to each entry is the from
+        node and the values are the edges to other nodes
+    """
+    l = graph_matrix2list(graph, num_nodes)
+    d = graph_list2dict(l, num_nodes)
+    
+    return d
+
+def graph_dict2list(graph, num_nodes):
+    """
+    Arguments:
+        graph   a dictionary where the key to each entry is the from
+                node and the values are the edges to other nodes
+        num_nodes  the number of nodes; each node will be labeled from
+                     0 to num_nodes-1
+
+    Returns:
+        a list representation of the graph g where each entry
+        in the list is a tuple of (from,to) edges in the graph
+    """
+    m = graph_dict2matrix(graph, num_nodes)
+    l = graph_matrix2list(m, num_nodes)
+    
+    return l
+
+def graph_dict2matrix(graph, num_nodes):
+    """
+    Arguments:
+        graph   a dictionary where the key to each entry is the from
+                node and the values are the edges to other nodes
+        num_nodes  the number of nodes; each node will be labeled from
+                    0 to num_nodes-1
+
+    Returns:
+        a numpy matrix where entries (i,j) represent edges from
+        node i to node j
+    """
+    m = np.zeros([num_nodes, num_nodes], dtype = int) # create a zero matrix
+
+    for key in graph:  # Itterate through the dict
+        a = graph[key]
+        for i in a:
+            m[key][i] = 1
+            
+    return m
