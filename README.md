@@ -10,3 +10,4 @@ https://www.linkedin.com/in/neil-joshi-232b75bb/
             build up the basics.
             
 2. Graph Conversion: The purpose of this exercise is to test the ability to use basic Python data structures such as lists, dictionaries,                         and numpy's array. The graphs will all be directed, which is to say that two edges are needed to get to and from two                      different nodes.
+3. Web Scraping: Crawl the web page to fetch 100 links from that Wiki Page.
